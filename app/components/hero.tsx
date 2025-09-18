@@ -2,7 +2,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Crown, BookOpen, Target, Users } from 'lucide-react'
+import { Crown, BookOpen, Target, Users, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
@@ -12,18 +12,44 @@ const stats = [
   { label: 'Famous Masters', value: '10+', icon: Users },
 ]
 
+const chessIcons = ['♔', '♕', '♖', '♗', '♘', '♙']
+
 export default function Hero() {
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden chess-hero">
-      {/* Floating chess pieces animation */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="animate-float absolute top-20 left-10 text-6xl">♔</div>
-        <div className="animate-float absolute top-40 right-20 text-4xl" style={{ animationDelay: '1s' }}>♛</div>
-        <div className="animate-float absolute bottom-40 left-20 text-5xl" style={{ animationDelay: '2s' }}>♜</div>
-        <div className="animate-float absolute bottom-20 right-10 text-4xl" style={{ animationDelay: '0.5s' }}>♝</div>
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Animated Chess Background */}
+      <div className="absolute inset-0 chess-hero-bg">
+        <div className="absolute inset-0 chess-board-pattern-large opacity-10 animate-checkerboard-slide"></div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      {/* Floating chess pieces with enhanced animations */}
+      <div className="absolute inset-0 pointer-events-none">
+        {chessIcons.map((piece, index) => (
+          <motion.div
+            key={index}
+            className="absolute text-4xl md:text-6xl opacity-10 text-chess-black dark:text-chess-white"
+            style={{
+              left: `${10 + (index * 15)}%`,
+              top: `${20 + (index % 3) * 20}%`,
+            }}
+            animate={{
+              y: [0, -20, 0],
+              rotate: [0, 5, -5, 0],
+              scale: [1, 1.1, 1],
+            }}
+            transition={{
+              duration: 4 + index,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: index * 0.5,
+            }}
+          >
+            {piece}
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -31,80 +57,119 @@ export default function Hero() {
           className="space-y-8"
         >
           {/* Main heading */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="inline-flex items-center space-x-3 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 border border-white/20"
+              className="inline-flex items-center space-x-3 chess-card rounded-full px-6 py-3 shadow-lg hover-chess-lift"
             >
-              <Crown className="w-6 h-6 text-amber-400" />
+              <Crown className="w-6 h-6 text-chess-gold animate-pulse-chess" />
               <span className="text-sm font-medium text-foreground">Master the Royal Game</span>
+              <Sparkles className="w-4 h-4 text-chess-gold" />
             </motion.div>
             
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-crimson text-shadow-warm">
+            <motion.h1 
+              className="text-4xl md:text-6xl lg:text-7xl font-bold font-crimson text-shadow-chess"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
               Learn Chess From
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-800">
+              <motion.span 
+                className="block text-transparent bg-clip-text bg-gradient-to-r from-chess-gold to-chess-accent"
+                animate={{ 
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                }}
+                transition={{ 
+                  duration: 3, 
+                  repeat: Infinity,
+                  ease: "easeInOut" 
+                }}
+              >
                 Beginner to Master
-              </span>
-            </h1>
+              </motion.span>
+            </motion.h1>
             
-            <p className="text-lg md:text-xl text-foreground/80 max-w-3xl mx-auto leading-relaxed">
-              Comprehensive guides on chess openings, strategies, checkmate patterns, and legendary players. 
-              Perfect for beginners and intermediate players looking to elevate their game.
-            </p>
+            <motion.p 
+              className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              Discover the art of chess through comprehensive guides on openings, strategies, 
+              checkmate patterns, and learn from the greatest masters in chess history.
+            </motion.p>
           </div>
 
           {/* CTA Buttons */}
-          <motion.div
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <Button asChild size="lg" className="bg-gradient-to-r from-amber-600 to-amber-800 hover:from-amber-700 hover:to-amber-900 text-white shadow-lg hover:shadow-xl transition-all duration-300 px-8 py-3">
+            <Button 
+              asChild 
+              size="lg" 
+              className="chess-square-dark text-chess-white hover:chess-square-light hover:text-chess-black transition-all duration-300 hover-chess-lift px-8 py-3 text-lg font-semibold shadow-lg"
+            >
               <Link href="/openings">
-                <BookOpen className="w-5 h-5 mr-2" />
-                Start Learning
+                Start Learning ♔
               </Link>
             </Button>
-            
-            <Button asChild variant="outline" size="lg" className="border-2 border-amber-600/20 hover:bg-amber-600/10 px-8 py-3">
+            <Button 
+              asChild 
+              variant="outline" 
+              size="lg" 
+              className="chess-square-light border-2 border-chess-dark-square hover:chess-square-dark hover:text-chess-white transition-all duration-300 hover-chess-lift px-8 py-3 text-lg font-semibold"
+            >
               <Link href="/masters">
-                <Crown className="w-5 h-5 mr-2" />
-                Meet the Masters
+                Meet the Masters ♛
               </Link>
             </Button>
           </motion.div>
 
           {/* Stats */}
-          <motion.div
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-16"
+            transition={{ duration: 0.8, delay: 1 }}
           >
-            {stats?.map((stat, index) => {
-              const Icon = stat?.icon || BookOpen
-              return (
-                <div key={index} className="text-center group hover-lift">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg">
-                    <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-amber-600 to-amber-800 rounded-xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                      <Icon className="w-6 h-6 text-white" />
+            {stats.map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                className="chess-card p-6 rounded-xl shadow-lg hover-chess-lift"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.2 + index * 0.2 }}
+                whileHover={{ scale: 1.05 }}
+              >
+                <div className="flex flex-col items-center space-y-3">
+                  <div className="p-3 chess-square-dark rounded-full">
+                    <stat.icon className="w-6 h-6 text-chess-gold" />
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-chess-gold font-crimson">
+                      {stat.value}
                     </div>
-                    <div className="text-3xl font-bold font-crimson text-amber-600 mb-2 animate-count-up">
-                      {stat?.value || '0'}
-                    </div>
-                    <div className="text-sm text-foreground/70 font-medium">
-                      {stat?.label || 'Feature'}
+                    <div className="text-sm text-muted-foreground font-medium">
+                      {stat.label}
                     </div>
                   </div>
                 </div>
-              )
-            })}
+              </motion.div>
+            ))}
           </motion.div>
         </motion.div>
       </div>
+
+      {/* Decorative chess pieces at corners */}
+      <div className="absolute top-10 left-10 text-6xl opacity-20 text-chess-gold animate-chess-float">♔</div>
+      <div className="absolute top-10 right-10 text-6xl opacity-20 text-chess-gold animate-chess-float" style={{ animationDelay: '1s' }}>♛</div>
+      <div className="absolute bottom-10 left-10 text-6xl opacity-20 text-chess-gold animate-chess-float" style={{ animationDelay: '2s' }}>♜</div>
+      <div className="absolute bottom-10 right-10 text-6xl opacity-20 text-chess-gold animate-chess-float" style={{ animationDelay: '0.5s' }}>♝</div>
     </div>
   )
 }

@@ -37,18 +37,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${crimsonPro.variable} font-sans antialiased wooden-texture min-h-screen`}>
+      <body className={`${inter.variable} ${crimsonPro.variable} font-sans antialiased chess-board-pattern-large min-h-screen`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
-          <Navigation />
-          <main className="relative">
-            {children}
-          </main>
-          <Toaster />
+          <div className="relative min-h-screen bg-background/95 backdrop-blur-sm">
+            <Navigation />
+            <main className="relative">
+              {children}
+            </main>
+            <Toaster />
+          </div>
         </ThemeProvider>
       </body>
     </html>
