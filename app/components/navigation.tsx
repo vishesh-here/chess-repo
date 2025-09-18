@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Crown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import ThemeSwitcher from '@/components/theme-switcher'
 
 const navItems = [
   { href: '/', label: 'Home' },
@@ -65,6 +66,9 @@ export default function Navigation() {
                 {item?.label || 'Menu Item'}
               </Link>
             ))}
+            <div className="ml-4 pl-4 border-l border-border/50">
+              <ThemeSwitcher />
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -103,6 +107,9 @@ export default function Navigation() {
                     {item?.label || 'Menu Item'}
                   </Link>
                 ))}
+                <div className="px-4 py-2 border-t border-border/50 mt-4 pt-4">
+                  <ThemeSwitcher />
+                </div>
               </div>
             </motion.div>
           )}
