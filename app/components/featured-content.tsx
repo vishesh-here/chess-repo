@@ -52,7 +52,7 @@ export default function FeaturedContent() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold font-crimson text-chess-accent mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold font-crimson text-chess-accent netflix-theme:text-red-400 mb-4">
             Master Every Aspect of Chess
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -73,12 +73,12 @@ export default function FeaturedContent() {
               viewport={{ once: true }}
               className="h-full"
             >
-              <Card className={`h-full hover-lift border-0 shadow-lg ${feature?.bgPattern || ''} bg-gradient-to-br from-white to-chess-wood-light/10`}>
+              <Card className={`h-full hover-lift border-0 shadow-lg ${feature?.bgPattern || ''} bg-gradient-to-br from-white to-chess-wood-light/10 netflix-card`}>
                 <CardHeader className="text-center">
-                  <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br ${feature?.color || 'from-amber-600 to-amber-800'} rounded-2xl mb-4 mx-auto shadow-lg`}>
+                  <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br ${feature?.color || 'from-amber-600 to-amber-800'} netflix-theme:from-red-600 netflix-theme:to-red-700 rounded-2xl mb-4 mx-auto shadow-lg`}>
                     <Icon className="w-8 h-8 text-white" />
                   </div>
-                  <CardTitle className="text-xl font-crimson text-chess-accent">
+                  <CardTitle className="text-xl font-crimson text-chess-accent netflix-theme:text-red-400">
                     {feature?.title || 'Feature'}
                   </CardTitle>
                 </CardHeader>
@@ -86,7 +86,7 @@ export default function FeaturedContent() {
                   <CardDescription className="text-sm leading-relaxed">
                     {feature?.description || 'Feature description'}
                   </CardDescription>
-                  <Button asChild variant="outline" className="w-full border-chess-wood-dark/20 hover:bg-chess-wood-light/20">
+                  <Button asChild variant="outline" className="w-full border-chess-wood-dark/20 hover:bg-chess-wood-light/20 netflix-theme:border-red-600/30 netflix-theme:hover:bg-red-600/10 netflix-theme:text-red-400 netflix-theme:hover:text-red-300 netflix-button">
                     <Link href={feature?.href || '/'}>
                       Learn More
                     </Link>
