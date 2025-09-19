@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Crown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { ThemeSwitcher } from '@/components/theme-switcher'
 
 const navItems = [
   { href: '/', label: 'Home' },
@@ -65,18 +66,21 @@ export default function Navigation() {
                 {item?.label || 'Menu Item'}
               </Link>
             ))}
+            <ThemeSwitcher />
           </div>
 
-          {/* Mobile Menu Button */}
-          <Button
-            variant="ghost"
-            size="sm"
-            className="md:hidden"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </Button>
+          {/* Mobile Menu Button and Theme Switcher */}
+          <div className="flex items-center space-x-2 md:hidden">
+            <ThemeSwitcher />
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </Button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}

@@ -6,6 +6,7 @@ import { BookOpen, Target, Brain, Crown } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { useTheme } from '@/components/theme-provider'
 
 const features = [
   {
@@ -43,6 +44,8 @@ const features = [
 ]
 
 export default function FeaturedContent() {
+  const { theme } = useTheme()
+  
   return (
     <section className="py-20">
       <div className="text-center mb-16">
@@ -73,12 +76,12 @@ export default function FeaturedContent() {
               viewport={{ once: true }}
               className="h-full"
             >
-              <Card className={`h-full hover-lift border-0 shadow-lg ${feature?.bgPattern || ''} bg-gradient-to-br from-white to-chess-wood-light/10`}>
+              <Card className={`h-full ${theme === 'netflix' ? 'netflix-card netflix-hover-lift' : `hover-lift border-0 shadow-lg ${feature?.bgPattern || ''} bg-gradient-to-br from-white to-chess-wood-light/10`}`}>
                 <CardHeader className="text-center">
-                  <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br ${feature?.color || 'from-amber-600 to-amber-800'} rounded-2xl mb-4 mx-auto shadow-lg`}>
+                  <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br ${theme === 'netflix' ? 'from-red-600 to-red-800' : feature?.color || 'from-amber-600 to-amber-800'} rounded-2xl mb-4 mx-auto shadow-lg`}>
                     <Icon className="w-8 h-8 text-white" />
                   </div>
-                  <CardTitle className="text-xl font-crimson text-chess-accent">
+                  <CardTitle className={`text-xl font-crimson ${theme === 'netflix' ? 'text-red-500' : 'text-chess-accent'}`}>
                     {feature?.title || 'Feature'}
                   </CardTitle>
                 </CardHeader>
@@ -86,7 +89,7 @@ export default function FeaturedContent() {
                   <CardDescription className="text-sm leading-relaxed">
                     {feature?.description || 'Feature description'}
                   </CardDescription>
-                  <Button asChild variant="outline" className="w-full border-chess-wood-dark/20 hover:bg-chess-wood-light/20">
+                  <Button asChild variant="outline" className={`w-full ${theme === 'netflix' ? 'border-red-500/50 hover:bg-red-500/10' : 'border-chess-wood-dark/20 hover:bg-chess-wood-light/20'}`}>
                     <Link href={feature?.href || '/'}>
                       Learn More
                     </Link>

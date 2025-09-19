@@ -54,6 +54,37 @@
     --chess-wood-dark: 25 20% 35%;
     --chess-accent: 30 70% 35%;
   }
+
+  /* Netflix Theme Variables */
+  .netflix {
+    --background: 0 0% 8%;
+    --foreground: 0 0% 95%;
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 0 100% 50%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 16%;
+    --secondary-foreground: 0 0% 95%;
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 0 100% 50%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 20%;
+    --input: 0 0% 16%;
+    --ring: 0 100% 50%;
+    --radius: 0.375rem;
+    --netflix-red: 0 100% 50%;
+    --netflix-dark-red: 0 100% 40%;
+    --netflix-black: 0 0% 8%;
+    --netflix-dark-gray: 0 0% 12%;
+    --netflix-gray: 0 0% 16%;
+    --netflix-light-gray: 0 0% 65%;
+    --netflix-white: 0 0% 95%;
+  }
 }
 
 @layer base {
@@ -114,6 +145,108 @@
       radial-gradient(circle at 25% 25%, hsl(var(--chess-wood-light)) 0%, transparent 50%),
       radial-gradient(circle at 75% 75%, hsl(var(--chess-wood-dark)) 0%, transparent 50%),
       linear-gradient(135deg, hsl(var(--chess-wood-light)), hsl(var(--chess-wood-dark)));
+  }
+
+  /* Netflix Theme Styles */
+  .netflix-hero {
+    background: 
+      radial-gradient(ellipse at top, hsl(var(--netflix-red)) 0%, transparent 70%),
+      linear-gradient(135deg, hsl(var(--netflix-black)) 0%, hsl(var(--netflix-dark-gray)) 100%);
+  }
+
+  .netflix-card {
+    background: hsl(var(--netflix-dark-gray));
+    border: 1px solid hsl(var(--netflix-gray));
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .netflix-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 32px rgba(229, 9, 20, 0.3);
+    border-color: hsl(var(--netflix-red));
+  }
+
+  .netflix-button {
+    background: linear-gradient(90deg, hsl(var(--netflix-red)) 0%, hsl(var(--netflix-dark-red)) 100%);
+    color: hsl(var(--netflix-white));
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .netflix-button:hover {
+    background: linear-gradient(90deg, hsl(var(--netflix-dark-red)) 0%, hsl(var(--netflix-red)) 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(229, 9, 20, 0.4);
+  }
+
+  .netflix-text-shadow {
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+  }
+
+  .netflix-gradient-text {
+    background: linear-gradient(45deg, hsl(var(--netflix-red)), hsl(var(--netflix-white)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .netflix-hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .netflix-hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(229, 9, 20, 0.2);
+  }
+
+  .netflix-glow {
+    box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
+  }
+
+  .netflix-border-glow {
+    border: 1px solid hsl(var(--netflix-red));
+    box-shadow: 0 0 10px rgba(229, 9, 20, 0.5);
+  }
+
+  /* Theme-aware styles */
+  .theme-aware-bg {
+    background: hsl(var(--background));
+  }
+
+  .theme-aware-card {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+  }
+
+  .theme-aware-text {
+    color: hsl(var(--foreground));
+  }
+
+  .theme-aware-accent {
+    color: hsl(var(--accent));
+  }
+
+  /* Netflix theme overrides for chess elements */
+  .netflix .chess-hero {
+    background: 
+      radial-gradient(ellipse at top, hsl(var(--netflix-red)) 0%, transparent 70%),
+      linear-gradient(135deg, hsl(var(--netflix-black)) 0%, hsl(var(--netflix-dark-gray)) 100%);
+  }
+
+  .netflix .wooden-texture {
+    background: hsl(var(--netflix-black));
+  }
+
+  .netflix .text-shadow-warm {
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+  }
+
+  .netflix .hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(229, 9, 20, 0.2);
   }
 }
 
