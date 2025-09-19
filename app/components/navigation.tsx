@@ -1,113 +1,131 @@
 
 'use client'
 
-import { useState, useEffect } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Crown } from 'lucide-react'
+import { Crown, BookOpen, Target, Users, Zap, Trophy } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { ModeToggle } from '@/components/mode-toggle'
+import { MedievalThemeToggle } from '@/components/MedievalThemeToggle'
+import { useMedievalTheme } from '@/contexts/MedievalThemeContext'
 
-const navItems = [
-  { href: '/', label: 'Home' },
-  { href: '/openings', label: 'Openings' },
-  { href: '/strategies', label: 'Strategies' },
-  { href: '/checkmates', label: 'Checkmates' },
-  { href: '/playing-styles', label: 'Playing Styles' },
-  { href: '/masters', label: 'Chess Masters' },
+const navigationItems = [
+  { name: 'Home', href: '/', icon: Crown },
+  { name: 'Openings', href: '/openings', icon: BookOpen },
+  { name: 'Strategies', href: '/strategies', icon: Target },
+  { name: 'Checkmates', href: '/checkmates', icon: Zap },
+  { name: 'Playing Styles', href: '/playing-styles', icon: Users },
+  { name: 'Masters', href: '/masters', icon: Trophy },
 ]
 
 export default function Navigation() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  useEffect(() => {
-    setIsOpen(false)
-  }, [pathname])
+  const { isMedievalTheme } = useMedievalTheme()
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled ? 'bg-background/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
-    }`}>
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2 group">
-            <div className="p-2 bg-gradient-to-br from-amber-600 to-amber-800 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
-              <Crown className="w-6 h-6 text-white" />
-            </div>
-            <span className="text-xl font-bold font-crimson text-chess-accent">
-              ChessMaster
+    <nav className={`
+      sticky top-0 z-50 w-full border-b backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-300
+      ${isMedievalTheme ? 'medieval-nav' : 'bg-background/95'}
+    `}>
+      <div className="container flex h-16 items-center">
+        <div className="mr-4 hidden md:flex">
+          <Link href="/" className="mr-6 flex items-center space-x-2">
+            <Crown className={`h-6 w-6 ${isMedievalTheme ? 'text-medieval-gold' : 'text-primary'}`} />
+            <span className={`
+              hidden font-bold sm:inline-block transition-all duration-300
+              ${isMedievalTheme ? 'medieval-heading text-lg' : 'text-lg'}
+            `}>
+              ChessMaster Academy
             </span>
           </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
-            {navItems?.map((item) => (
-              <Link
-                key={item?.href}
-                href={item?.href || '/'}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  pathname === item?.href
-                    ? 'bg-chess-wood-dark/20 text-chess-accent shadow-sm'
-                    : 'text-foreground/80 hover:bg-chess-wood-light/20 hover:text-chess-accent'
-                }`}
-              >
-                {item?.label || 'Menu Item'}
-              </Link>
-            ))}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <Button
-            variant="ghost"
-            size="sm"
-            className="md:hidden"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </Button>
+          <nav className="flex items-center space-x-6 text-sm font-medium">
+            {navigationItems.slice(1).map((item) => {
+              const Icon = item.icon
+              const isActive = pathname === item.href
+              
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`
+                    transition-colors hover:text-foreground/80 flex items-center space-x-1 group
+                    ${isActive 
+                      ? (isMedievalTheme ? 'text-medieval-gold font-semibold' : 'text-foreground') 
+                      : (isMedievalTheme ? 'text-medieval-stone hover:text-medieval-gold' : 'text-foreground/60')
+                    }
+                    ${isMedievalTheme ? 'medieval-text' : ''}
+                  `}
+                >
+                  <Icon className={`
+                    h-4 w-4 transition-all duration-300
+                    ${isActive && isMedievalTheme ? 'animate-medieval-glow' : ''}
+                    ${isMedievalTheme ? 'group-hover:scale-110' : ''}
+                  `} />
+                  <span>{item.name}</span>
+                </Link>
+              )
+            })}
+          </nav>
         </div>
 
-        {/* Mobile Navigation */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-              className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur-md"
-            >
-              <div className="py-4 space-y-2">
-                {navItems?.map((item) => (
-                  <Link
-                    key={item?.href}
-                    href={item?.href || '/'}
-                    className={`block px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
-                      pathname === item?.href
-                        ? 'bg-chess-wood-dark/20 text-chess-accent'
-                        : 'text-foreground/80 hover:bg-chess-wood-light/20 hover:text-chess-accent'
-                    }`}
-                  >
-                    {item?.label || 'Menu Item'}
-                  </Link>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </nav>
-    </header>
+        {/* Mobile menu button */}
+        <Button
+          variant="ghost"
+          className={`
+            mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden
+            ${isMedievalTheme ? 'text-medieval-gold hover:text-medieval-gold-light' : ''}
+          `}
+        >
+          <Crown className="h-6 w-6" />
+          <span className="sr-only">Toggle Menu</span>
+        </Button>
+
+        <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+          <div className="w-full flex-1 md:w-auto md:flex-none">
+            {/* Search could go here */}
+          </div>
+          <nav className="flex items-center space-x-2">
+            <MedievalThemeToggle />
+            <ModeToggle />
+          </nav>
+        </div>
+      </div>
+
+      {/* Mobile navigation */}
+      <div className="border-t md:hidden">
+        <nav className={`
+          flex items-center justify-around py-2 text-sm
+          ${isMedievalTheme ? 'bg-medieval-stone/10' : ''}
+        `}>
+          {navigationItems.map((item) => {
+            const Icon = item.icon
+            const isActive = pathname === item.href
+            
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`
+                  flex flex-col items-center space-y-1 px-2 py-1 transition-colors
+                  ${isActive 
+                    ? (isMedievalTheme ? 'text-medieval-gold' : 'text-foreground') 
+                    : (isMedievalTheme ? 'text-medieval-stone hover:text-medieval-gold' : 'text-foreground/60 hover:text-foreground')
+                  }
+                `}
+              >
+                <Icon className={`
+                  h-4 w-4 transition-all duration-300
+                  ${isActive && isMedievalTheme ? 'animate-medieval-glow' : ''}
+                `} />
+                <span className={`text-xs ${isMedievalTheme ? 'medieval-text' : ''}`}>
+                  {item.name}
+                </span>
+              </Link>
+            )
+          })}
+        </nav>
+      </div>
+    </nav>
   )
 }

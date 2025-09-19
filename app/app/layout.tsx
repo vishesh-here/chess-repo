@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Inter, Crimson_Pro } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
+import { MedievalThemeProvider } from '@/contexts/MedievalThemeContext'
 import { Toaster } from '@/components/ui/sonner'
 import Navigation from '@/components/navigation'
 
@@ -44,11 +45,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navigation />
-          <main className="relative">
-            {children}
-          </main>
-          <Toaster />
+          <MedievalThemeProvider>
+            <Navigation />
+            <main className="relative">
+              {children}
+            </main>
+            <Toaster />
+          </MedievalThemeProvider>
         </ThemeProvider>
       </body>
     </html>
