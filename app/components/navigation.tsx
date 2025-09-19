@@ -5,8 +5,9 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Crown } from 'lucide-react'
+import { Menu, X, Crown, Tv } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useNetflixTheme } from '@/components/theme-provider'
 
 const navItems = [
   { href: '/', label: 'Home' },
@@ -21,6 +22,7 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
+  const { isNetflixTheme, toggleNetflixTheme } = useNetflixTheme()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,6 +67,21 @@ export default function Navigation() {
                 {item?.label || 'Menu Item'}
               </Link>
             ))}
+            
+            {/* Netflix Theme Toggle */}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleNetflixTheme}
+              className={`ml-2 p-2 rounded-lg transition-all duration-200 ${
+                isNetflixTheme 
+                  ? 'bg-red-600 text-white hover:bg-red-700' 
+                  : 'text-foreground/80 hover:bg-chess-wood-light/20'
+              }`}
+              aria-label="Toggle Netflix theme"
+            >
+              <Tv className="w-4 h-4" />
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -103,6 +120,21 @@ export default function Navigation() {
                     {item?.label || 'Menu Item'}
                   </Link>
                 ))}
+                
+                {/* Mobile Netflix Theme Toggle */}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={toggleNetflixTheme}
+                  className={`mx-4 mt-2 flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    isNetflixTheme 
+                      ? 'bg-red-600 text-white hover:bg-red-700' 
+                      : 'text-foreground/80 hover:bg-chess-wood-light/20'
+                  }`}
+                >
+                  <Tv className="w-4 h-4" />
+                  <span>{isNetflixTheme ? 'Exit Netflix Mode' : 'Netflix Mode'}</span>
+                </Button>
               </div>
             </motion.div>
           )}

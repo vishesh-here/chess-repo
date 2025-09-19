@@ -2,8 +2,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Crown, BookOpen, Target, Users } from 'lucide-react'
+import { Crown, BookOpen, Target, Users, Play } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useNetflixTheme } from '@/components/theme-provider'
 import Link from 'next/link'
 
 const stats = [
@@ -13,8 +14,12 @@ const stats = [
 ]
 
 export default function Hero() {
+  const { isNetflixTheme } = useNetflixTheme()
+  
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden chess-hero">
+    <div className={`relative min-h-screen flex items-center justify-center overflow-hidden ${
+      isNetflixTheme ? 'bg-gradient-to-b from-black via-gray-900 to-black' : 'chess-hero'
+    }`}>
       {/* Floating chess pieces animation */}
       <div className="absolute inset-0 opacity-5">
         <div className="animate-float absolute top-20 left-10 text-6xl">♔</div>
@@ -36,22 +41,36 @@ export default function Hero() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="inline-flex items-center space-x-3 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 border border-white/20"
+              className={`inline-flex items-center space-x-3 backdrop-blur-sm rounded-full px-6 py-3 border ${
+                isNetflixTheme 
+                  ? 'bg-red-600/20 border-red-500/30' 
+                  : 'bg-white/10 border-white/20'
+              }`}
             >
-              <Crown className="w-6 h-6 text-amber-400" />
-              <span className="text-sm font-medium text-foreground">Master the Royal Game</span>
+              <Crown className={`w-6 h-6 ${isNetflixTheme ? 'text-red-400' : 'text-amber-400'}`} />
+              <span className="text-sm font-medium text-foreground">
+                {isNetflixTheme ? 'Now Streaming: Chess Mastery' : 'Master the Royal Game'}
+              </span>
             </motion.div>
             
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-crimson text-shadow-warm">
-              Learn Chess From
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-800">
-                Beginner to Master
+            <h1 className={`text-4xl md:text-6xl lg:text-7xl font-bold font-crimson ${
+              isNetflixTheme ? 'netflix-text-shadow' : 'text-shadow-warm'
+            }`}>
+              {isNetflixTheme ? 'Chess Mastery' : 'Learn Chess From'}
+              <span className={`block text-transparent bg-clip-text ${
+                isNetflixTheme 
+                  ? 'bg-gradient-to-r from-red-500 to-red-700' 
+                  : 'bg-gradient-to-r from-amber-600 to-amber-800'
+              }`}>
+                {isNetflixTheme ? 'Unlimited Learning' : 'Beginner to Master'}
               </span>
             </h1>
             
             <p className="text-lg md:text-xl text-foreground/80 max-w-3xl mx-auto leading-relaxed">
-              Comprehensive guides on chess openings, strategies, checkmate patterns, and legendary players. 
-              Perfect for beginners and intermediate players looking to elevate their game.
+              {isNetflixTheme 
+                ? 'Stream unlimited chess content. Master openings, strategies, and legendary games. Your chess journey starts here.'
+                : 'Comprehensive guides on chess openings, strategies, checkmate patterns, and legendary players. Perfect for beginners and intermediate players looking to elevate their game.'
+              }
             </p>
           </div>
 
@@ -62,17 +81,38 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
-            <Button asChild size="lg" className="bg-gradient-to-r from-amber-600 to-amber-800 hover:from-amber-700 hover:to-amber-900 text-white shadow-lg hover:shadow-xl transition-all duration-300 px-8 py-3">
+            <Button 
+              asChild 
+              size="lg" 
+              className={`shadow-lg hover:shadow-xl transition-all duration-300 px-8 py-3 ${
+                isNetflixTheme 
+                  ? 'bg-red-600 hover:bg-red-700 text-white' 
+                  : 'bg-gradient-to-r from-amber-600 to-amber-800 hover:from-amber-700 hover:to-amber-900 text-white'
+              }`}
+            >
               <Link href="/openings">
-                <BookOpen className="w-5 h-5 mr-2" />
-                Start Learning
+                {isNetflixTheme ? (
+                  <Play className="w-5 h-5 mr-2" />
+                ) : (
+                  <BookOpen className="w-5 h-5 mr-2" />
+                )}
+                {isNetflixTheme ? 'Start Watching' : 'Start Learning'}
               </Link>
             </Button>
             
-            <Button asChild variant="outline" size="lg" className="border-2 border-amber-600/20 hover:bg-amber-600/10 px-8 py-3">
+            <Button 
+              asChild 
+              variant="outline" 
+              size="lg" 
+              className={`border-2 px-8 py-3 ${
+                isNetflixTheme 
+                  ? 'border-red-600/50 hover:bg-red-600/10 text-white hover:border-red-500' 
+                  : 'border-amber-600/20 hover:bg-amber-600/10'
+              }`}
+            >
               <Link href="/masters">
                 <Crown className="w-5 h-5 mr-2" />
-                Meet the Masters
+                {isNetflixTheme ? 'Browse Masters' : 'Meet the Masters'}
               </Link>
             </Button>
           </motion.div>
@@ -88,11 +128,21 @@ export default function Hero() {
               const Icon = stat?.icon || BookOpen
               return (
                 <div key={index} className="text-center group hover-lift">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg">
-                    <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-amber-600 to-amber-800 rounded-xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <div className={`backdrop-blur-sm rounded-2xl p-6 border shadow-lg transition-all duration-300 ${
+                    isNetflixTheme 
+                      ? 'bg-gray-900/50 border-red-500/20 hover:border-red-500/40' 
+                      : 'bg-white/10 border-white/20'
+                  }`}>
+                    <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl mb-4 group-hover:scale-110 transition-transform duration-300 ${
+                      isNetflixTheme 
+                        ? 'bg-gradient-to-br from-red-600 to-red-800' 
+                        : 'bg-gradient-to-br from-amber-600 to-amber-800'
+                    }`}>
                       <Icon className="w-6 h-6 text-white" />
                     </div>
-                    <div className="text-3xl font-bold font-crimson text-amber-600 mb-2 animate-count-up">
+                    <div className={`text-3xl font-bold font-crimson mb-2 animate-count-up ${
+                      isNetflixTheme ? 'text-red-400' : 'text-amber-600'
+                    }`}>
                       {stat?.value || '0'}
                     </div>
                     <div className="text-sm text-foreground/70 font-medium">

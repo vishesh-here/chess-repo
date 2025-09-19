@@ -2,9 +2,10 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { BookOpen, Target, Brain, Crown } from 'lucide-react'
+import { BookOpen, Target, Brain, Crown, Play } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { useNetflixTheme } from '@/components/theme-provider'
 import Link from 'next/link'
 
 const features = [
@@ -43,6 +44,8 @@ const features = [
 ]
 
 export default function FeaturedContent() {
+  const { isNetflixTheme } = useNetflixTheme()
+  
   return (
     <section className="py-20">
       <div className="text-center mb-16">
@@ -52,11 +55,16 @@ export default function FeaturedContent() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold font-crimson text-chess-accent mb-4">
-            Master Every Aspect of Chess
+          <h2 className={`text-3xl md:text-4xl font-bold font-crimson mb-4 ${
+            isNetflixTheme ? 'text-red-400' : 'text-chess-accent'
+          }`}>
+            {isNetflixTheme ? 'Popular on ChessFlix' : 'Master Every Aspect of Chess'}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            From fundamental openings to advanced strategies, our comprehensive guides will transform your chess understanding.
+            {isNetflixTheme 
+              ? 'Trending chess content curated for your skill level. Binge-watch your way to mastery.'
+              : 'From fundamental openings to advanced strategies, our comprehensive guides will transform your chess understanding.'
+            }
           </p>
         </motion.div>
       </div>
@@ -73,22 +81,49 @@ export default function FeaturedContent() {
               viewport={{ once: true }}
               className="h-full"
             >
-              <Card className={`h-full hover-lift border-0 shadow-lg ${feature?.bgPattern || ''} bg-gradient-to-br from-white to-chess-wood-light/10`}>
+              <Card className={`h-full transition-all duration-300 border-0 shadow-lg ${
+                isNetflixTheme 
+                  ? 'netflix-card hover:scale-105' 
+                  : `hover-lift ${feature?.bgPattern || ''} bg-gradient-to-br from-white to-chess-wood-light/10`
+              }`}>
                 <CardHeader className="text-center">
-                  <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br ${feature?.color || 'from-amber-600 to-amber-800'} rounded-2xl mb-4 mx-auto shadow-lg`}>
+                  <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br rounded-2xl mb-4 mx-auto shadow-lg ${
+                    isNetflixTheme 
+                      ? 'from-red-600 to-red-800' 
+                      : feature?.color || 'from-amber-600 to-amber-800'
+                  }`}>
                     <Icon className="w-8 h-8 text-white" />
                   </div>
-                  <CardTitle className="text-xl font-crimson text-chess-accent">
+                  <CardTitle className={`text-xl font-crimson ${
+                    isNetflixTheme ? 'text-white' : 'text-chess-accent'
+                  }`}>
                     {feature?.title || 'Feature'}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="text-center space-y-4">
-                  <CardDescription className="text-sm leading-relaxed">
+                  <CardDescription className={`text-sm leading-relaxed ${
+                    isNetflixTheme ? 'text-gray-300' : ''
+                  }`}>
                     {feature?.description || 'Feature description'}
                   </CardDescription>
-                  <Button asChild variant="outline" className="w-full border-chess-wood-dark/20 hover:bg-chess-wood-light/20">
+                  <Button 
+                    asChild 
+                    variant={isNetflixTheme ? "default" : "outline"} 
+                    className={`w-full ${
+                      isNetflixTheme 
+                        ? 'bg-red-600 hover:bg-red-700 text-white' 
+                        : 'border-chess-wood-dark/20 hover:bg-chess-wood-light/20'
+                    }`}
+                  >
                     <Link href={feature?.href || '/'}>
-                      Learn More
+                      {isNetflixTheme ? (
+                        <>
+                          <Play className="w-4 h-4 mr-2" />
+                          Watch Now
+                        </>
+                      ) : (
+                        'Learn More'
+                      )}
                     </Link>
                   </Button>
                 </CardContent>
