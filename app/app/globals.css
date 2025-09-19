@@ -1,4 +1,6 @@
 
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -54,19 +56,76 @@
     --chess-wood-dark: 25 20% 35%;
     --chess-accent: 30 70% 35%;
   }
+
+  /* Medieval Theme Variables */
+  [data-medieval-theme="true"] {
+    --background: 35 20% 92%;
+    --foreground: 25 30% 15%;
+    --card: 35 25% 88%;
+    --card-foreground: 25 30% 15%;
+    --popover: 35 25% 88%;
+    --popover-foreground: 25 30% 15%;
+    --primary: 45 85% 45%;
+    --primary-foreground: 25 30% 15%;
+    --secondary: 35 15% 80%;
+    --secondary-foreground: 25 30% 15%;
+    --muted: 35 15% 85%;
+    --muted-foreground: 25 20% 40%;
+    --accent: 45 85% 45%;
+    --accent-foreground: 25 30% 15%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 35 20% 75%;
+    --input: 35 20% 85%;
+    --ring: 45 85% 45%;
+  }
+
+  [data-medieval-theme="true"].dark {
+    --background: 25 30% 8%;
+    --foreground: 35 25% 85%;
+    --card: 25 30% 12%;
+    --card-foreground: 35 25% 85%;
+    --popover: 25 30% 12%;
+    --popover-foreground: 35 25% 85%;
+    --primary: 45 85% 55%;
+    --primary-foreground: 25 30% 8%;
+    --secondary: 25 20% 20%;
+    --secondary-foreground: 35 25% 85%;
+    --muted: 25 20% 18%;
+    --muted-foreground: 35 15% 60%;
+    --accent: 45 85% 55%;
+    --accent-foreground: 25 30% 8%;
+    --border: 25 20% 25%;
+    --input: 25 20% 20%;
+    --ring: 45 85% 55%;
+  }
 }
 
 @layer base {
   * {
     @apply border-border;
   }
+  
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Medieval theme body styling */
+  [data-medieval-theme="true"] body {
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(139, 69, 19, 0.05) 0%, transparent 50%),
+      url('/assets/medieval/parchment-texture.jpg');
+    background-attachment: fixed;
+    background-size: cover, cover, 400px 400px;
+    background-blend-mode: multiply;
   }
 }
 
 @layer components {
+  /* Original chess styling */
   .chess-board-pattern {
     background-image: 
       linear-gradient(45deg, transparent 25%, hsl(var(--chess-wood-dark)) 25%),
@@ -78,26 +137,66 @@
   }
   
   .wooden-texture {
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='https://freesvg.org/img/texturelegno.png fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4b896' fill-opacity='0.1'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4b896' fill-opacity='0.1'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
     background-color: hsl(var(--chess-wood-light));
+  }
+
+  /* Medieval theme overrides */
+  [data-medieval-theme="true"] .wooden-texture {
+    background-image: 
+      url('/assets/medieval/stone-texture.jpg'),
+      url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='https://i.pinimg.com/736x/db/e5/87/dbe5872f7caf193eece3e419aeb1ec71.jpg d='M20 20c0 11.046-8.954 20-20 20v20h40V20H20z' fill='%238B4513' fill-opacity='0.1'/%3E%3C/svg%3E");
+    background-color: #8B7355;
+    background-blend-mode: multiply;
   }
 
   .chess-square-light {
     background-color: hsl(var(--chess-wood-light));
-    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='https://static.vecteezy.com/system/resources/previews/022/983/392/non_2x/a-pattern-of-light-and-dark-brown-squares-of-a-chessboard-wooden-board-for-chess-moves-on-a-checkered-background-chess-cartoon-texture-for-printing-on-textiles-and-paper-gift-packaging-vector.jpg fill='%23D4B896' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v20h40V20H20z'/%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg' fill='%23D4B896' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v20h40V20H20z'/%3E%3C/svg%3E");
+  }
+
+  [data-medieval-theme="true"] .chess-square-light {
+    background-color: #A0896B;
+    background-image: 
+      url('/assets/medieval/stone-texture.jpg'),
+      url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Chessboard480.svg/1024px-Chessboard480.svg.png d='M20 20c0 11.046-8.954 20-20 20v20h40V20H20z' fill='%23D4AF37' fill-opacity='0.1'/%3E%3C/svg%3E");
+    background-blend-mode: multiply;
+    border: 1px solid rgba(212, 175, 55, 0.3);
   }
 
   .chess-square-dark {
     background-color: hsl(var(--chess-wood-dark));
-    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Chessboard480.svg/1024px-Chessboard480.svg.png fill='%238B4513' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v20h40V20H20z'/%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg' fill='%238B4513' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v20h40V20H20z'/%3E%3C/svg%3E");
+  }
+
+  [data-medieval-theme="true"] .chess-square-dark {
+    background-color: #6B5B47;
+    background-image: 
+      url('/assets/medieval/stone-texture.jpg'),
+      url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='https://i.pinimg.com/736x/47/85/1a/47851a14450e215137c39636a5b49a55.jpg d='M20 20c0 11.046-8.954 20-20 20v20h40V20H20z' fill='%238B4513' fill-opacity='0.2'/%3E%3C/svg%3E");
+    background-blend-mode: multiply;
+    border: 1px solid rgba(139, 69, 19, 0.4);
   }
 
   .gradient-wooden {
     background: linear-gradient(135deg, hsl(var(--chess-wood-light)), hsl(var(--chess-wood-dark)));
   }
 
+  [data-medieval-theme="true"] .gradient-wooden {
+    background: 
+      linear-gradient(135deg, rgba(212, 175, 55, 0.8), rgba(139, 69, 19, 0.8)),
+      url('/assets/medieval/stone-texture.jpg');
+    background-blend-mode: multiply;
+  }
+
   .text-shadow-warm {
     text-shadow: 2px 2px 4px rgba(139, 69, 19, 0.3);
+  }
+
+  [data-medieval-theme="true"] .text-shadow-warm {
+    text-shadow: 
+      2px 2px 4px rgba(139, 69, 19, 0.6),
+      0 0 10px rgba(212, 175, 55, 0.3);
   }
 
   .hover-lift {
@@ -109,14 +208,101 @@
     box-shadow: 0 8px 25px rgba(139, 69, 19, 0.2);
   }
 
+  [data-medieval-theme="true"] .hover-lift:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 
+      0 8px 25px rgba(139, 69, 19, 0.3),
+      0 0 20px rgba(212, 175, 55, 0.2);
+  }
+
   .chess-hero {
     background: 
       radial-gradient(circle at 25% 25%, hsl(var(--chess-wood-light)) 0%, transparent 50%),
       radial-gradient(circle at 75% 75%, hsl(var(--chess-wood-dark)) 0%, transparent 50%),
       linear-gradient(135deg, hsl(var(--chess-wood-light)), hsl(var(--chess-wood-dark)));
   }
+
+  [data-medieval-theme="true"] .chess-hero {
+    background: 
+      radial-gradient(circle at 25% 25%, rgba(212, 175, 55, 0.6) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(139, 69, 19, 0.6) 0%, transparent 50%),
+      linear-gradient(135deg, rgba(245, 230, 211, 0.9), rgba(139, 115, 85, 0.9)),
+      url('/assets/medieval/parchment-texture.jpg');
+    background-blend-mode: multiply;
+    border: 3px solid rgba(212, 175, 55, 0.5);
+    border-image: linear-gradient(45deg, #D4AF37, #8B4513, #D4AF37) 1;
+  }
+
+  /* Medieval specific components */
+  [data-medieval-theme="true"] .medieval-card {
+    background: 
+      linear-gradient(135deg, rgba(245, 230, 211, 0.95), rgba(232, 213, 183, 0.95)),
+      url('/assets/medieval/parchment-texture.jpg');
+    background-blend-mode: multiply;
+    border: 2px solid rgba(212, 175, 55, 0.4);
+    box-shadow: 
+      0 4px 6px -1px rgba(139, 69, 19, 0.2),
+      0 2px 4px -1px rgba(139, 69, 19, 0.1),
+      inset 0 1px 0 rgba(212, 175, 55, 0.2);
+  }
+
+  [data-medieval-theme="true"] .medieval-button {
+    background: linear-gradient(135deg, #D4AF37, #B7950B);
+    border: 2px solid #8B4513;
+    color: #2C1810;
+    font-family: 'MedievalSharp', serif;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3);
+    box-shadow: 
+      0 2px 4px rgba(139, 69, 19, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  [data-medieval-theme="true"] .medieval-button:hover {
+    background: linear-gradient(135deg, #F4D03F, #D4AF37);
+    box-shadow: 
+      0 4px 8px rgba(139, 69, 19, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      0 0 15px rgba(212, 175, 55, 0.3);
+    transform: translateY(-1px);
+  }
+
+  [data-medieval-theme="true"] .medieval-nav {
+    background: 
+      linear-gradient(135deg, rgba(139, 115, 85, 0.95), rgba(107, 91, 71, 0.95)),
+      url('/assets/medieval/stone-texture.jpg');
+    background-blend-mode: multiply;
+    border-bottom: 3px solid rgba(212, 175, 55, 0.6);
+    box-shadow: 0 4px 6px -1px rgba(139, 69, 19, 0.3);
+  }
+
+  [data-medieval-theme="true"] .medieval-text {
+    font-family: 'Cinzel', serif;
+    color: #2C1810;
+    text-shadow: 1px 1px 2px rgba(212, 175, 55, 0.3);
+  }
+
+  [data-medieval-theme="true"] .medieval-heading {
+    font-family: 'MedievalSharp', serif;
+    color: #8B4513;
+    text-shadow: 
+      2px 2px 4px rgba(212, 175, 55, 0.4),
+      0 0 10px rgba(212, 175, 55, 0.2);
+  }
+
+  /* Medieval border decorations */
+  [data-medieval-theme="true"] .medieval-border-top {
+    border-top: 3px solid transparent;
+    border-image: url('/assets/medieval/medieval-border.svg') 30 repeat;
+  }
+
+  [data-medieval-theme="true"] .medieval-border-bottom {
+    border-bottom: 3px solid transparent;
+    border-image: url('/assets/medieval/medieval-border.svg') 30 repeat;
+  }
 }
 
+/* Medieval animations */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
@@ -127,10 +313,56 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes medievalPulse {
+  0%, 100% { 
+    box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes heraldicShine {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
 
 .animate-count-up {
   animation: countUp 0.6s ease-out forwards;
+}
+
+[data-medieval-theme="true"] .animate-medieval-pulse {
+  animation: medievalPulse 2s ease-in-out infinite;
+}
+
+[data-medieval-theme="true"] .animate-heraldic-shine {
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
+  background-size: 200% 100%;
+  animation: heraldicShine 3s ease-in-out infinite;
+}
+
+/* Scrollbar styling for medieval theme */
+[data-medieval-theme="true"] ::-webkit-scrollbar {
+  width: 12px;
+}
+
+[data-medieval-theme="true"] ::-webkit-scrollbar-track {
+  background: rgba(139, 115, 85, 0.2);
+  border-radius: 6px;
+}
+
+[data-medieval-theme="true"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #D4AF37, #B7950B);
+  border-radius: 6px;
+  border: 2px solid rgba(139, 69, 19, 0.3);
+}
+
+[data-medieval-theme="true"] ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #F4D03F, #D4AF37);
 }

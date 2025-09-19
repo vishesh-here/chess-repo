@@ -1,200 +1,221 @@
 
 'use client'
 
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { RotateCcw, Play, Pause } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+import React, { useState } from 'react'
+import { useMedievalTheme } from '@/contexts/MedievalThemeContext'
 
-// Simple chess piece representations
-const initialBoard = [
-  ['♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜'],
-  ['♟', '♟', '♟', '♟', '♟', '♟', '♟', '♟'],
-  [null, null, null, null, null, null, null, null],
-  [null, null, null, null, null, null, null, null],
-  [null, null, null, null, null, null, null, null],
-  [null, null, null, null, null, null, null, null],
-  ['♙', '♙', '♙', '♙', '♙', '♙', '♙', '♙'],
-  ['♖', '♘', '♗', '♕', '♔', '♗', '♘', '♖'],
+interface ChessPiece {
+  type: 'king' | 'queen' | 'rook' | 'bishop' | 'knight' | 'pawn'
+  color: 'white' | 'black'
+}
+
+interface Square {
+  piece?: ChessPiece
+  isLight: boolean
+}
+
+const initialBoard: Square[][] = [
+  [
+    { piece: { type: 'rook', color: 'black' }, isLight: false },
+    { piece: { type: 'knight', color: 'black' }, isLight: true },
+    { piece: { type: 'bishop', color: 'black' }, isLight: false },
+    { piece: { type: 'queen', color: 'black' }, isLight: true },
+    { piece: { type: 'king', color: 'black' }, isLight: false },
+    { piece: { type: 'bishop', color: 'black' }, isLight: true },
+    { piece: { type: 'knight', color: 'black' }, isLight: false },
+    { piece: { type: 'rook', color: 'black' }, isLight: true },
+  ],
+  Array(8).fill(null).map((_, i) => ({ 
+    piece: { type: 'pawn', color: 'black' }, 
+    isLight: i % 2 === 1 
+  })),
+  ...Array(4).fill(null).map((_, row) => 
+    Array(8).fill(null).map((_, col) => ({ 
+      isLight: (row + col) % 2 === 0 
+    }))
+  ),
+  Array(8).fill(null).map((_, i) => ({ 
+    piece: { type: 'pawn', color: 'white' }, 
+    isLight: i % 2 === 0 
+  })),
+  [
+    { piece: { type: 'rook', color: 'white' }, isLight: true },
+    { piece: { type: 'knight', color: 'white' }, isLight: false },
+    { piece: { type: 'bishop', color: 'white' }, isLight: true },
+    { piece: { type: 'queen', color: 'white' }, isLight: false },
+    { piece: { type: 'king', color: 'white' }, isLight: true },
+    { piece: { type: 'bishop', color: 'white' }, isLight: false },
+    { piece: { type: 'knight', color: 'white' }, isLight: true },
+    { piece: { type: 'rook', color: 'white' }, isLight: false },
+  ],
 ]
 
-// Scholar's Mate demonstration moves
-const scholarsMate = [
-  { from: [6, 4], to: [4, 4], piece: '♙' }, // e4
-  { from: [1, 4], to: [3, 4], piece: '♟' }, // e5
-  { from: [7, 5], to: [4, 2], piece: '♗' }, // Bc4
-  { from: [0, 1], to: [2, 2], piece: '♞' }, // Nc6
-  { from: [7, 3], to: [3, 7], piece: '♕' }, // Qh5
-  { from: [0, 6], to: [2, 5], piece: '♞' }, // Nf6
-  { from: [3, 7], to: [1, 5], piece: '♕' }, // Qxf7# (Checkmate)
-]
+const pieceSymbols = {
+  white: {
+    king: '♔',
+    queen: '♕',
+    rook: '♖',
+    bishop: '♗',
+    knight: '♘',
+    pawn: '♙',
+  },
+  black: {
+    king: '♚',
+    queen: '♛',
+    rook: '♜',
+    bishop: '♝',
+    knight: '♞',
+    pawn: '♟',
+  },
+}
+
+const medievalPieceSymbols = {
+  white: {
+    king: '👑',
+    queen: '👸',
+    rook: '🏰',
+    bishop: '⛪',
+    knight: '🐎',
+    pawn: '🛡️',
+  },
+  black: {
+    king: '🖤👑',
+    queen: '🖤👸',
+    rook: '🖤🏰',
+    bishop: '🖤⛪',
+    knight: '🖤🐎',
+    pawn: '🖤🛡️',
+  },
+}
 
 export default function ChessBoard() {
-  const [board, setBoard] = useState(initialBoard)
-  const [currentMove, setCurrentMove] = useState(0)
-  const [isPlaying, setIsPlaying] = useState(false)
+  const [board, setBoard] = useState<Square[][]>(initialBoard)
+  const [selectedSquare, setSelectedSquare] = useState<[number, number] | null>(null)
+  const { isMedievalTheme } = useMedievalTheme()
 
-  useEffect(() => {
-    let interval: NodeJS.Timeout | null = null
-    
-    if (isPlaying && currentMove < scholarsMate?.length) {
-      interval = setInterval(() => {
-        setCurrentMove(prev => {
-          if (prev >= (scholarsMate?.length || 0) - 1) {
-            setIsPlaying(false)
-            return prev
-          }
-          return prev + 1
-        })
-      }, 1500)
-    }
-    
-    return () => {
-      if (interval) clearInterval(interval)
-    }
-  }, [isPlaying, currentMove])
-
-  useEffect(() => {
-    const newBoard = JSON.parse(JSON.stringify(initialBoard))
-    
-    for (let i = 0; i <= currentMove && i < (scholarsMate?.length || 0); i++) {
-      const move = scholarsMate?.[i]
-      if (move) {
-        const { from, to, piece } = move
-        if (from && to) {
-          newBoard[from[0]][from[1]] = null
-          newBoard[to[0]][to[1]] = piece
-        }
+  const handleSquareClick = (row: number, col: number) => {
+    if (selectedSquare) {
+      const [selectedRow, selectedCol] = selectedSquare
+      if (selectedRow === row && selectedCol === col) {
+        setSelectedSquare(null)
+        return
       }
-    }
-    
-    setBoard(newBoard)
-  }, [currentMove])
 
-  const resetDemo = () => {
-    setCurrentMove(0)
-    setIsPlaying(false)
-    setBoard(initialBoard)
+      // Move piece
+      const newBoard = [...board]
+      const piece = newBoard[selectedRow][selectedCol].piece
+      newBoard[row][col].piece = piece
+      newBoard[selectedRow][selectedCol].piece = undefined
+      setBoard(newBoard)
+      setSelectedSquare(null)
+    } else if (board[row][col].piece) {
+      setSelectedSquare([row, col])
+    }
   }
 
-  const togglePlay = () => {
-    if (currentMove >= (scholarsMate?.length || 0) - 1) {
-      resetDemo()
-    }
-    setIsPlaying(!isPlaying)
+  const isSelected = (row: number, col: number) => {
+    return selectedSquare && selectedSquare[0] === row && selectedSquare[1] === col
   }
 
   return (
-    <section className="py-20">
-      <div className="text-center mb-16">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-3xl md:text-4xl font-bold font-crimson text-chess-accent mb-4">
-            Interactive Chess Demonstrations
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Watch and learn from classic chess patterns. This demonstrates the Scholar's Mate - a quick checkmate for beginners to recognize.
-          </p>
-        </motion.div>
-      </div>
-
-      <div className="max-w-4xl mx-auto">
-        <Card className="overflow-hidden shadow-2xl border-0 bg-gradient-to-br from-white to-chess-wood-light/10">
-          <CardHeader className="text-center bg-gradient-wooden">
-            <CardTitle className="text-2xl font-crimson text-white text-shadow-warm">
-              Scholar's Mate Demonstration
-            </CardTitle>
-            <p className="text-white/80 text-sm">
-              Move {currentMove + 1} of {scholarsMate?.length || 0} • {currentMove >= (scholarsMate?.length || 0) - 1 ? 'Checkmate!' : 'In Progress'}
-            </p>
-          </CardHeader>
-          <CardContent className="p-8">
-            {/* Chess Board */}
-            <div className="max-w-md mx-auto mb-8">
-              <div className="grid grid-cols-8 gap-0 border-4 border-chess-wood-dark rounded-lg overflow-hidden shadow-lg">
-                {board?.map((row, rowIndex) =>
-                  row?.map((piece, colIndex) => {
-                    const isLight = (rowIndex + colIndex) % 2 === 0
-                    const isLastMove = currentMove > 0 && scholarsMate?.[currentMove - 1] && 
-                      ((scholarsMate[currentMove - 1]?.to?.[0] === rowIndex && scholarsMate[currentMove - 1]?.to?.[1] === colIndex) ||
-                       (scholarsMate[currentMove - 1]?.from?.[0] === rowIndex && scholarsMate[currentMove - 1]?.from?.[1] === colIndex))
-                    
-                    return (
-                      <motion.div
-                        key={`${rowIndex}-${colIndex}`}
-                        className={`
-                          aspect-square flex items-center justify-center text-2xl font-bold cursor-pointer
-                          ${isLight ? 'chess-square-light' : 'chess-square-dark'}
-                          ${isLastMove ? 'ring-2 ring-amber-500 ring-inset' : ''}
-                          hover:brightness-110 transition-all duration-200
-                        `}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <span className="drop-shadow-sm">
-                          {piece || ''}
-                        </span>
-                      </motion.div>
-                    )
-                  }) || []
-                ) || []}
-              </div>
-            </div>
-
-            {/* Controls */}
-            <div className="flex items-center justify-center space-x-4">
-              <Button
-                onClick={togglePlay}
-                size="lg"
-                className="bg-gradient-to-r from-green-600 to-green-800 hover:from-green-700 hover:to-green-900 text-white"
-              >
-                {isPlaying ? (
-                  <>
-                    <Pause className="w-5 h-5 mr-2" />
-                    Pause
-                  </>
-                ) : (
-                  <>
-                    <Play className="w-5 h-5 mr-2" />
-                    {currentMove >= (scholarsMate?.length || 0) - 1 ? 'Restart' : 'Play'}
-                  </>
-                )}
-              </Button>
+    <div className={`
+      inline-block p-4 rounded-lg transition-all duration-300
+      ${isMedievalTheme 
+        ? 'medieval-card shadow-medieval-xl' 
+        : 'bg-card shadow-lg'
+      }
+    `}>
+      <div className={`
+        grid grid-cols-8 gap-0 border-2 rounded-lg overflow-hidden transition-all duration-300
+        ${isMedievalTheme 
+          ? 'border-medieval-bronze shadow-gold-glow' 
+          : 'border-border'
+        }
+      `}>
+        {board.map((row, rowIndex) =>
+          row.map((square, colIndex) => (
+            <button
+              key={`${rowIndex}-${colIndex}`}
+              className={`
+                aspect-square w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-2xl sm:text-3xl font-bold
+                transition-all duration-200 hover:scale-105 relative group
+                ${square.isLight 
+                  ? (isMedievalTheme ? 'chess-square-light' : 'chess-square-light') 
+                  : (isMedievalTheme ? 'chess-square-dark' : 'chess-square-dark')
+                }
+                ${isSelected(rowIndex, colIndex) 
+                  ? (isMedievalTheme ? 'ring-2 ring-medieval-gold shadow-gold-glow' : 'ring-2 ring-primary') 
+                  : ''
+                }
+                ${square.piece 
+                  ? 'hover:bg-opacity-80 cursor-pointer' 
+                  : 'hover:bg-opacity-60'
+                }
+              `}
+              onClick={() => handleSquareClick(rowIndex, colIndex)}
+            >
+              {square.piece && (
+                <span className={`
+                  transition-all duration-200 group-hover:scale-110
+                  ${isMedievalTheme 
+                    ? 'filter drop-shadow-lg' 
+                    : square.piece.color === 'white' ? 'text-white drop-shadow-md' : 'text-gray-800'
+                  }
+                `}>
+                  {isMedievalTheme 
+                    ? medievalPieceSymbols[square.piece.color][square.piece.type]
+                    : pieceSymbols[square.piece.color][square.piece.type]
+                  }
+                </span>
+              )}
               
-              <Button
-                onClick={resetDemo}
-                variant="outline"
-                size="lg"
-                className="border-chess-wood-dark/20 hover:bg-chess-wood-light/20"
-              >
-                <RotateCcw className="w-5 h-5 mr-2" />
-                Reset
-              </Button>
-            </div>
-
-            {/* Move Description */}
-            <div className="mt-6 text-center">
-              <div className="bg-chess-wood-light/10 rounded-lg p-4 max-w-lg mx-auto">
-                <p className="text-sm font-medium text-chess-accent">
-                  {currentMove === 0 && 'Ready to start the Scholar\'s Mate demonstration'}
-                  {currentMove === 1 && 'White opens with e4, controlling the center'}
-                  {currentMove === 2 && 'Black responds with e5, mirroring the center control'}
-                  {currentMove === 3 && 'White develops the bishop to c4, targeting f7'}
-                  {currentMove === 4 && 'Black develops the knight to c6'}
-                  {currentMove === 5 && 'White brings the queen to h5, threatening mate'}
-                  {currentMove === 6 && 'Black defends with Nf6'}
-                  {currentMove >= 7 && 'Checkmate! The queen captures on f7 with mate!'}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+              {/* Coordinate labels for medieval theme */}
+              {isMedievalTheme && (
+                <>
+                  {colIndex === 0 && (
+                    <span className="absolute left-1 top-1 text-xs text-medieval-bronze opacity-60 font-medieval">
+                      {8 - rowIndex}
+                    </span>
+                  )}
+                  {rowIndex === 7 && (
+                    <span className="absolute right-1 bottom-1 text-xs text-medieval-bronze opacity-60 font-medieval">
+                      {String.fromCharCode(97 + colIndex)}
+                    </span>
+                  )}
+                </>
+              )}
+              
+              {/* Selection indicator */}
+              {isSelected(rowIndex, colIndex) && (
+                <div className={`
+                  absolute inset-0 rounded-sm transition-all duration-200
+                  ${isMedievalTheme 
+                    ? 'bg-medieval-gold/20 animate-medieval-pulse' 
+                    : 'bg-primary/20 animate-pulse'
+                  }
+                `} />
+              )}
+            </button>
+          ))
+        )}
       </div>
-    </section>
+      
+      {/* Board legend for medieval theme */}
+      {isMedievalTheme && (
+        <div className="mt-4 text-center">
+          <p className="medieval-text text-sm text-medieval-stone">
+            Click a piece to select, then click a destination to move
+          </p>
+          <div className="mt-2 flex justify-center space-x-4 text-xs medieval-text text-medieval-bronze">
+            <span>🏰 Castle (Rook)</span>
+            <span>🐎 Knight</span>
+            <span>⛪ Bishop</span>
+            <span>👑 King</span>
+            <span>👸 Queen</span>
+            <span>🛡️ Pawn</span>
+          </div>
+        </div>
+      )}
+    </div>
   )
 }
