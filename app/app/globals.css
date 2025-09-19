@@ -54,6 +54,40 @@
     --chess-wood-dark: 25 20% 35%;
     --chess-accent: 30 70% 35%;
   }
+
+  /* Netflix Theme Variables */
+  .netflix-theme {
+    --background: 0 0% 8%;
+    --foreground: 0 0% 95%;
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 0 100% 50%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 16%;
+    --secondary-foreground: 0 0% 95%;
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 0 100% 50%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 20%;
+    --input: 0 0% 16%;
+    --ring: 0 100% 50%;
+    --radius: 0.375rem;
+    --chess-wood-light: 0 0% 25%;
+    --chess-wood-dark: 0 0% 15%;
+    --chess-accent: 0 100% 50%;
+    --netflix-red: 0 100% 50%;
+    --netflix-dark-red: 0 100% 40%;
+    --netflix-black: 0 0% 8%;
+    --netflix-dark-gray: 0 0% 12%;
+    --netflix-gray: 0 0% 16%;
+    --netflix-light-gray: 0 0% 65%;
+    --netflix-white: 0 0% 95%;
+  }
 }
 
 @layer base {
@@ -114,6 +148,85 @@
       radial-gradient(circle at 25% 25%, hsl(var(--chess-wood-light)) 0%, transparent 50%),
       radial-gradient(circle at 75% 75%, hsl(var(--chess-wood-dark)) 0%, transparent 50%),
       linear-gradient(135deg, hsl(var(--chess-wood-light)), hsl(var(--chess-wood-dark)));
+  }
+
+  /* Netflix Theme Components */
+  .netflix-theme .wooden-texture {
+    background: hsl(var(--netflix-black));
+  }
+
+  .netflix-theme .chess-hero {
+    background: 
+      radial-gradient(circle at 25% 25%, hsl(var(--netflix-red) / 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, hsl(var(--netflix-dark-red) / 0.1) 0%, transparent 50%),
+      linear-gradient(135deg, hsl(var(--netflix-black)), hsl(var(--netflix-dark-gray)));
+  }
+
+  .netflix-card {
+    background: hsl(var(--netflix-dark-gray));
+    border: 1px solid hsl(var(--netflix-gray));
+    border-radius: 0.375rem;
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+
+  .netflix-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(229, 9, 20, 0.3);
+    border-color: hsl(var(--netflix-red));
+  }
+
+  .netflix-button {
+    background: hsl(var(--netflix-red));
+    color: hsl(var(--netflix-white));
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.25rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .netflix-button:hover {
+    background: hsl(var(--netflix-dark-red));
+    transform: translateY(-1px);
+  }
+
+  .netflix-hero-gradient {
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.4) 50%,
+      rgba(0, 0, 0, 0.8) 100%
+    );
+  }
+
+  .netflix-text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+
+  .netflix-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .netflix-scrollbar::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .netflix-scrollbar::-webkit-scrollbar-track {
+    background: hsl(var(--netflix-gray));
+    border-radius: 4px;
+  }
+
+  .netflix-scrollbar::-webkit-scrollbar-thumb {
+    background: hsl(var(--netflix-red));
+    border-radius: 4px;
+  }
+
+  .netflix-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--netflix-dark-red));
   }
 }
 
