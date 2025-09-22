@@ -6,6 +6,8 @@ import { motion } from 'framer-motion'
 import { RotateCcw, Play, Pause } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { useChessTheme } from '@/components/theme-provider'
+import { MedievalSword, MedievalShield } from '@/components/medieval-icons'
 
 // Simple chess piece representations
 const initialBoard = [
@@ -34,6 +36,8 @@ export default function ChessBoard() {
   const [board, setBoard] = useState(initialBoard)
   const [currentMove, setCurrentMove] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
+  const { chessTheme } = useChessTheme()
+  const isMedieval = chessTheme === 'medieval'
 
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null
@@ -94,7 +98,9 @@ export default function ChessBoard() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold font-crimson text-chess-accent mb-4">
+          <h2 className={`text-3xl md:text-4xl font-bold font-crimson mb-4 ${
+            isMedieval ? 'medieval-text-gold' : 'text-chess-accent'
+          }`}>
             Interactive Chess Demonstrations
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -104,12 +110,22 @@ export default function ChessBoard() {
       </div>
 
       <div className="max-w-4xl mx-auto">
-        <Card className="overflow-hidden shadow-2xl border-0 bg-gradient-to-br from-white to-chess-wood-light/10">
-          <CardHeader className="text-center bg-gradient-wooden">
-            <CardTitle className="text-2xl font-crimson text-white text-shadow-warm">
+        <Card className={`overflow-hidden shadow-2xl border-0 ${
+          isMedieval 
+            ? 'bg-gradient-to-br from-medieval-parchment to-medieval-stone/10 medieval-border' 
+            : 'bg-gradient-to-br from-white to-chess-wood-light/10'
+        }`}>
+          <CardHeader className={`text-center ${
+            isMedieval ? 'bg-gradient-to-r from-medieval-gold to-medieval-bronze' : 'bg-gradient-wooden'
+          }`}>
+            <CardTitle className={`text-2xl font-crimson text-shadow-warm ${
+              isMedieval ? 'text-medieval-leather' : 'text-white'
+            }`}>
               Scholar's Mate Demonstration
             </CardTitle>
-            <p className="text-white/80 text-sm">
+            <p className={`text-sm ${
+              isMedieval ? 'text-medieval-leather/80' : 'text-white/80'
+            }`}>
               Move {currentMove + 1} of {scholarsMate?.length || 0} • {currentMove >= (scholarsMate?.length || 0) - 1 ? 'Checkmate!' : 'In Progress'}
             </p>
           </CardHeader>
@@ -151,16 +167,28 @@ export default function ChessBoard() {
               <Button
                 onClick={togglePlay}
                 size="lg"
-                className="bg-gradient-to-r from-green-600 to-green-800 hover:from-green-700 hover:to-green-900 text-white"
+                className={`text-white ${
+                  isMedieval 
+                    ? 'bg-gradient-to-r from-medieval-gold to-medieval-bronze hover:from-medieval-gold/90 hover:to-medieval-bronze/90 medieval-glow' 
+                    : 'bg-gradient-to-r from-green-600 to-green-800 hover:from-green-700 hover:to-green-900'
+                }`}
               >
                 {isPlaying ? (
                   <>
-                    <Pause className="w-5 h-5 mr-2" />
+                    {isMedieval ? (
+                      <MedievalShield className="w-5 h-5 mr-2" />
+                    ) : (
+                      <Pause className="w-5 h-5 mr-2" />
+                    )}
                     Pause
                   </>
                 ) : (
                   <>
-                    <Play className="w-5 h-5 mr-2" />
+                    {isMedieval ? (
+                      <MedievalSword className="w-5 h-5 mr-2" />
+                    ) : (
+                      <Play className="w-5 h-5 mr-2" />
+                    )}
                     {currentMove >= (scholarsMate?.length || 0) - 1 ? 'Restart' : 'Play'}
                   </>
                 )}
@@ -170,7 +198,11 @@ export default function ChessBoard() {
                 onClick={resetDemo}
                 variant="outline"
                 size="lg"
-                className="border-chess-wood-dark/20 hover:bg-chess-wood-light/20"
+                className={`${
+                  isMedieval 
+                    ? 'border-medieval-gold/30 hover:bg-medieval-gold/10 text-medieval-gold' 
+                    : 'border-chess-wood-dark/20 hover:bg-chess-wood-light/20'
+                }`}
               >
                 <RotateCcw className="w-5 h-5 mr-2" />
                 Reset
@@ -179,8 +211,14 @@ export default function ChessBoard() {
 
             {/* Move Description */}
             <div className="mt-6 text-center">
-              <div className="bg-chess-wood-light/10 rounded-lg p-4 max-w-lg mx-auto">
-                <p className="text-sm font-medium text-chess-accent">
+              <div className={`rounded-lg p-4 max-w-lg mx-auto ${
+                isMedieval 
+                  ? 'bg-medieval-parchment/20 medieval-scroll' 
+                  : 'bg-chess-wood-light/10'
+              }`}>
+                <p className={`text-sm font-medium ${
+                  isMedieval ? 'medieval-text-gold' : 'text-chess-accent'
+                }`}>
                   {currentMove === 0 && 'Ready to start the Scholar\'s Mate demonstration'}
                   {currentMove === 1 && 'White opens with e4, controlling the center'}
                   {currentMove === 2 && 'Black responds with e5, mirroring the center control'}
