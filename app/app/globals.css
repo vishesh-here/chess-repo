@@ -54,6 +54,73 @@
     --chess-wood-dark: 25 20% 35%;
     --chess-accent: 30 70% 35%;
   }
+
+  /* Medieval Chess Theme */
+  [data-chess-theme="medieval"] {
+    --background: 28 25% 15%;
+    --foreground: 45 15% 85%;
+    --card: 30 20% 18%;
+    --card-foreground: 45 15% 85%;
+    --popover: 30 20% 18%;
+    --popover-foreground: 45 15% 85%;
+    --primary: 45 85% 55%;
+    --primary-foreground: 28 25% 15%;
+    --secondary: 35 15% 25%;
+    --secondary-foreground: 45 15% 85%;
+    --muted: 35 15% 25%;
+    --muted-foreground: 40 10% 65%;
+    --accent: 45 85% 55%;
+    --accent-foreground: 28 25% 15%;
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 45 15% 85%;
+    --border: 35 15% 30%;
+    --input: 35 15% 25%;
+    --ring: 45 85% 55%;
+    --chess-wood-light: 45 35% 65%;
+    --chess-wood-dark: 30 40% 35%;
+    --chess-accent: 45 85% 55%;
+    
+    /* Medieval specific colors */
+    --medieval-gold: 45 85% 55%;
+    --medieval-bronze: 30 60% 40%;
+    --medieval-stone: 35 15% 45%;
+    --medieval-parchment: 45 25% 85%;
+    --medieval-leather: 25 35% 25%;
+    --medieval-iron: 220 10% 35%;
+  }
+
+  [data-chess-theme="medieval"].dark {
+    --background: 25 30% 8%;
+    --foreground: 45 20% 90%;
+    --card: 28 25% 12%;
+    --card-foreground: 45 20% 90%;
+    --popover: 28 25% 12%;
+    --popover-foreground: 45 20% 90%;
+    --primary: 45 80% 60%;
+    --primary-foreground: 25 30% 8%;
+    --secondary: 30 20% 15%;
+    --secondary-foreground: 45 20% 90%;
+    --muted: 30 20% 15%;
+    --muted-foreground: 40 15% 70%;
+    --accent: 45 80% 60%;
+    --accent-foreground: 25 30% 8%;
+    --destructive: 0 70% 60%;
+    --destructive-foreground: 45 20% 90%;
+    --border: 30 20% 20%;
+    --input: 30 20% 15%;
+    --ring: 45 80% 60%;
+    --chess-wood-light: 45 30% 70%;
+    --chess-wood-dark: 30 35% 30%;
+    --chess-accent: 45 80% 60%;
+    
+    /* Medieval specific colors for dark mode */
+    --medieval-gold: 45 80% 60%;
+    --medieval-bronze: 30 55% 45%;
+    --medieval-stone: 35 20% 50%;
+    --medieval-parchment: 45 30% 90%;
+    --medieval-leather: 25 30% 20%;
+    --medieval-iron: 220 15% 40%;
+  }
 }
 
 @layer base {
@@ -78,18 +145,18 @@
   }
   
   .wooden-texture {
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='https://freesvg.org/img/texturelegno.png fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4b896' fill-opacity='0.1'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4b896' fill-opacity='0.1'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
     background-color: hsl(var(--chess-wood-light));
   }
 
   .chess-square-light {
     background-color: hsl(var(--chess-wood-light));
-    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='https://static.vecteezy.com/system/resources/previews/022/983/392/non_2x/a-pattern-of-light-and-dark-brown-squares-of-a-chessboard-wooden-board-for-chess-moves-on-a-checkered-background-chess-cartoon-texture-for-printing-on-textiles-and-paper-gift-packaging-vector.jpg fill='%23D4B896' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v20h40V20H20z'/%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg' fill='%23D4B896' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v20h40V20H20z'/%3E%3C/svg%3E");
   }
 
   .chess-square-dark {
     background-color: hsl(var(--chess-wood-dark));
-    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Chessboard480.svg/1024px-Chessboard480.svg.png fill='%238B4513' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v20h40V20H20z'/%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg' fill='%238B4513' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v20h40V20H20z'/%3E%3C/svg%3E");
   }
 
   .gradient-wooden {
@@ -114,6 +181,70 @@
       radial-gradient(circle at 25% 25%, hsl(var(--chess-wood-light)) 0%, transparent 50%),
       radial-gradient(circle at 75% 75%, hsl(var(--chess-wood-dark)) 0%, transparent 50%),
       linear-gradient(135deg, hsl(var(--chess-wood-light)), hsl(var(--chess-wood-dark)));
+  }
+
+  /* Medieval Theme Specific Styles */
+  [data-chess-theme="medieval"] .wooden-texture {
+    background-image: 
+      url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='https://upload.wikimedia.org/wikipedia/commons/0/09/Geometric_wood_pattern_%28Unsplash%29.jpg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4AF37' fill-opacity='0.08'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2l-2 2V0zm0 4l4-4h2l-6 6V4zm0 4l8-8h2L40 10V8zm0 4L52 0h2L40 14v-2zm0 4L56 0h2L40 18v-2zm0 4L60 0h2L40 22v-2zm0 4L64 0h2L40 26v-2zm0 4L68 0h2L40 30v-2zm0 4L72 0h2L40 34v-2zm0 4L76 0h2L40 38v-2zm0 4L80 0v2L42 40h-2zm4 0L80 4v2L46 40h-2zm4 0L80 8v2L50 40h-2zm4 0l28-28v2L54 40h-2zm4 0l24-24v2L58 40h-2zm4 0l20-20v2L62 40h-2zm4 0l16-16v2L66 40h-2zm4 0l12-12v2L70 40h-2zm4 0l8-8v2L74 40h-2zm4 0l4-4v2L78 40h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+      linear-gradient(135deg, hsl(var(--medieval-leather)), hsl(var(--medieval-bronze)));
+    background-color: hsl(var(--medieval-leather));
+  }
+
+  [data-chess-theme="medieval"] .chess-hero {
+    background: 
+      radial-gradient(circle at 30% 20%, hsl(var(--medieval-gold)) 0%, transparent 40%),
+      radial-gradient(circle at 70% 80%, hsl(var(--medieval-bronze)) 0%, transparent 40%),
+      linear-gradient(135deg, hsl(var(--medieval-leather)), hsl(var(--medieval-stone)));
+  }
+
+  [data-chess-theme="medieval"] .gradient-wooden {
+    background: linear-gradient(135deg, hsl(var(--medieval-gold)), hsl(var(--medieval-bronze)));
+  }
+
+  [data-chess-theme="medieval"] .text-shadow-warm {
+    text-shadow: 2px 2px 6px rgba(212, 175, 55, 0.4);
+  }
+
+  [data-chess-theme="medieval"] .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(212, 175, 55, 0.3);
+  }
+
+  /* Medieval decorative elements */
+  .medieval-border {
+    border-image: linear-gradient(45deg, hsl(var(--medieval-gold)), hsl(var(--medieval-bronze))) 1;
+    border-width: 2px;
+    border-style: solid;
+  }
+
+  .medieval-scroll {
+    background: 
+      linear-gradient(135deg, hsl(var(--medieval-parchment)), hsl(var(--medieval-stone))),
+      url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='https://thumbs.dreamstime.com/b/ornate-vintage-swirly-floral-parchment-background-elegant-decorative-border-frame-pattern-distressed-aged-grungy-texture-361148562.jpg fill='%23D4AF37' fill-opacity='0.05'%3E%3Cpath d='M50 50c0-27.614 22.386-50 50-50v100c-27.614 0-50-22.386-50-50z'/%3E%3Cpath d='M50 50c0 27.614-22.386 50-50 50V0c27.614 0 50 22.386 50 50z'/%3E%3C/g%3E%3C/svg%3E");
+    border-radius: 8px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .medieval-glow {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+  }
+
+  .medieval-text-gold {
+    color: hsl(var(--medieval-gold));
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+  }
+
+  .medieval-bg-leather {
+    background-color: hsl(var(--medieval-leather));
+  }
+
+  .medieval-bg-stone {
+    background-color: hsl(var(--medieval-stone));
+  }
+
+  .medieval-bg-parchment {
+    background-color: hsl(var(--medieval-parchment));
   }
 }
 

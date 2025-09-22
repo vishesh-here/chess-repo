@@ -60,6 +60,19 @@ const config: Config = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
+        'chess-wood': {
+          light: 'hsl(var(--chess-wood-light))',
+          dark: 'hsl(var(--chess-wood-dark))',
+        },
+        'chess-accent': 'hsl(var(--chess-accent))',
+        medieval: {
+          gold: 'hsl(var(--medieval-gold))',
+          bronze: 'hsl(var(--medieval-bronze))',
+          stone: 'hsl(var(--medieval-stone))',
+          parchment: 'hsl(var(--medieval-parchment))',
+          leather: 'hsl(var(--medieval-leather))',
+          iron: 'hsl(var(--medieval-iron))',
+        },
       },
       keyframes: {
         'accordion-down': {

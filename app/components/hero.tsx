@@ -4,23 +4,83 @@
 import { motion } from 'framer-motion'
 import { Crown, BookOpen, Target, Users } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useChessTheme } from '@/components/theme-provider'
+import { 
+  MedievalCrown, 
+  MedievalScroll, 
+  MedievalSword, 
+  MedievalShield,
+  MedievalKing,
+  MedievalQueen,
+  MedievalRook,
+  MedievalBishop
+} from '@/components/medieval-icons'
 import Link from 'next/link'
 
 const stats = [
-  { label: 'Chess Openings', value: '8+', icon: BookOpen },
-  { label: 'Checkmate Patterns', value: '7+', icon: Target },
-  { label: 'Famous Masters', value: '10+', icon: Users },
+  { 
+    label: 'Chess Openings', 
+    value: '8+', 
+    icon: BookOpen,
+    medievalIcon: MedievalScroll
+  },
+  { 
+    label: 'Checkmate Patterns', 
+    value: '7+', 
+    icon: Target,
+    medievalIcon: MedievalSword
+  },
+  { 
+    label: 'Famous Masters', 
+    value: '10+', 
+    icon: Users,
+    medievalIcon: MedievalShield
+  },
 ]
 
 export default function Hero() {
+  const { chessTheme } = useChessTheme()
+  const isMedieval = chessTheme === 'medieval'
+
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden chess-hero">
       {/* Floating chess pieces animation */}
       <div className="absolute inset-0 opacity-5">
-        <div className="animate-float absolute top-20 left-10 text-6xl">♔</div>
-        <div className="animate-float absolute top-40 right-20 text-4xl" style={{ animationDelay: '1s' }}>♛</div>
-        <div className="animate-float absolute bottom-40 left-20 text-5xl" style={{ animationDelay: '2s' }}>♜</div>
-        <div className="animate-float absolute bottom-20 right-10 text-4xl" style={{ animationDelay: '0.5s' }}>♝</div>
+        {isMedieval ? (
+          <>
+            <motion.div 
+              className="animate-float absolute top-20 left-10"
+              style={{ animationDelay: '0s' }}
+            >
+              <MedievalKing className="w-16 h-16 text-medieval-gold" />
+            </motion.div>
+            <motion.div 
+              className="animate-float absolute top-40 right-20"
+              style={{ animationDelay: '1s' }}
+            >
+              <MedievalQueen className="w-12 h-12 text-medieval-bronze" />
+            </motion.div>
+            <motion.div 
+              className="animate-float absolute bottom-40 left-20"
+              style={{ animationDelay: '2s' }}
+            >
+              <MedievalRook className="w-14 h-14 text-medieval-gold" />
+            </motion.div>
+            <motion.div 
+              className="animate-float absolute bottom-20 right-10"
+              style={{ animationDelay: '0.5s' }}
+            >
+              <MedievalBishop className="w-12 h-12 text-medieval-bronze" />
+            </motion.div>
+          </>
+        ) : (
+          <>
+            <div className="animate-float absolute top-20 left-10 text-6xl">♔</div>
+            <div className="animate-float absolute top-40 right-20 text-4xl" style={{ animationDelay: '1s' }}>♛</div>
+            <div className="animate-float absolute bottom-40 left-20 text-5xl" style={{ animationDelay: '2s' }}>♜</div>
+            <div className="animate-float absolute bottom-20 right-10 text-4xl" style={{ animationDelay: '0.5s' }}>♝</div>
+          </>
+        )}
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -36,15 +96,31 @@ export default function Hero() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="inline-flex items-center space-x-3 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 border border-white/20"
+              className={`inline-flex items-center space-x-3 backdrop-blur-sm rounded-full px-6 py-3 border ${
+                isMedieval 
+                  ? 'bg-medieval-leather/20 border-medieval-gold/30 medieval-glow' 
+                  : 'bg-white/10 border-white/20'
+              }`}
             >
-              <Crown className="w-6 h-6 text-amber-400" />
-              <span className="text-sm font-medium text-foreground">Master the Royal Game</span>
+              {isMedieval ? (
+                <MedievalCrown className="w-6 h-6 text-medieval-gold" />
+              ) : (
+                <Crown className="w-6 h-6 text-amber-400" />
+              )}
+              <span className={`text-sm font-medium ${
+                isMedieval ? 'medieval-text-gold' : 'text-foreground'
+              }`}>
+                Master the Royal Game
+              </span>
             </motion.div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-crimson text-shadow-warm">
               Learn Chess From
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-800">
+              <span className={`block text-transparent bg-clip-text ${
+                isMedieval 
+                  ? 'bg-gradient-to-r from-medieval-gold to-medieval-bronze' 
+                  : 'bg-gradient-to-r from-amber-600 to-amber-800'
+              }`}>
                 Beginner to Master
               </span>
             </h1>
@@ -62,16 +138,32 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
-            <Button asChild size="lg" className="bg-gradient-to-r from-amber-600 to-amber-800 hover:from-amber-700 hover:to-amber-900 text-white shadow-lg hover:shadow-xl transition-all duration-300 px-8 py-3">
+            <Button asChild size="lg" className={`shadow-lg hover:shadow-xl transition-all duration-300 px-8 py-3 ${
+              isMedieval 
+                ? 'bg-gradient-to-r from-medieval-gold to-medieval-bronze hover:from-medieval-gold/90 hover:to-medieval-bronze/90 text-medieval-leather medieval-glow' 
+                : 'bg-gradient-to-r from-amber-600 to-amber-800 hover:from-amber-700 hover:to-amber-900 text-white'
+            }`}>
               <Link href="/openings">
-                <BookOpen className="w-5 h-5 mr-2" />
+                {isMedieval ? (
+                  <MedievalScroll className="w-5 h-5 mr-2" />
+                ) : (
+                  <BookOpen className="w-5 h-5 mr-2" />
+                )}
                 Start Learning
               </Link>
             </Button>
             
-            <Button asChild variant="outline" size="lg" className="border-2 border-amber-600/20 hover:bg-amber-600/10 px-8 py-3">
+            <Button asChild variant="outline" size="lg" className={`border-2 px-8 py-3 ${
+              isMedieval 
+                ? 'border-medieval-gold/30 hover:bg-medieval-gold/10 text-medieval-gold hover:text-medieval-gold' 
+                : 'border-amber-600/20 hover:bg-amber-600/10'
+            }`}>
               <Link href="/masters">
-                <Crown className="w-5 h-5 mr-2" />
+                {isMedieval ? (
+                  <MedievalCrown className="w-5 h-5 mr-2" />
+                ) : (
+                  <Crown className="w-5 h-5 mr-2" />
+                )}
                 Meet the Masters
               </Link>
             </Button>
@@ -86,13 +178,28 @@ export default function Hero() {
           >
             {stats?.map((stat, index) => {
               const Icon = stat?.icon || BookOpen
+              const MedievalIcon = stat?.medievalIcon || MedievalScroll
               return (
                 <div key={index} className="text-center group hover-lift">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg">
-                    <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-amber-600 to-amber-800 rounded-xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                      <Icon className="w-6 h-6 text-white" />
+                  <div className={`backdrop-blur-sm rounded-2xl p-6 border shadow-lg ${
+                    isMedieval 
+                      ? 'bg-medieval-leather/20 border-medieval-gold/30 medieval-scroll' 
+                      : 'bg-white/10 border-white/20'
+                  }`}>
+                    <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl mb-4 group-hover:scale-110 transition-transform duration-300 ${
+                      isMedieval 
+                        ? 'bg-gradient-to-br from-medieval-gold to-medieval-bronze medieval-glow' 
+                        : 'bg-gradient-to-br from-amber-600 to-amber-800'
+                    }`}>
+                      {isMedieval ? (
+                        <MedievalIcon className="w-6 h-6 text-medieval-leather" />
+                      ) : (
+                        <Icon className="w-6 h-6 text-white" />
+                      )}
                     </div>
-                    <div className="text-3xl font-bold font-crimson text-amber-600 mb-2 animate-count-up">
+                    <div className={`text-3xl font-bold font-crimson mb-2 animate-count-up ${
+                      isMedieval ? 'medieval-text-gold' : 'text-amber-600'
+                    }`}>
                       {stat?.value || '0'}
                     </div>
                     <div className="text-sm text-foreground/70 font-medium">
