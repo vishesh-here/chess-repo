@@ -104,9 +104,9 @@ export default function ChessBoard() {
       </div>
 
       <div className="max-w-4xl mx-auto">
-        <Card className="overflow-hidden shadow-2xl border-0 bg-gradient-to-br from-white to-chess-wood-light/10">
-          <CardHeader className="text-center bg-gradient-wooden">
-            <CardTitle className="text-2xl font-crimson text-white text-shadow-warm">
+        <Card className="overflow-hidden shadow-2xl border-0 bg-gradient-to-br from-white to-chess-wood-light/10 medieval-card">
+          <CardHeader className="text-center bg-gradient-wooden medieval-scroll">
+            <CardTitle className="text-2xl font-crimson text-white text-shadow-warm medieval-text-shadow">
               Scholar's Mate Demonstration
             </CardTitle>
             <p className="text-white/80 text-sm">
@@ -151,7 +151,7 @@ export default function ChessBoard() {
               <Button
                 onClick={togglePlay}
                 size="lg"
-                className="bg-gradient-to-r from-green-600 to-green-800 hover:from-green-700 hover:to-green-900 text-white"
+                className="bg-gradient-to-r from-green-600 to-green-800 hover:from-green-700 hover:to-green-900 text-white medieval-button"
               >
                 {isPlaying ? (
                   <>
@@ -170,7 +170,7 @@ export default function ChessBoard() {
                 onClick={resetDemo}
                 variant="outline"
                 size="lg"
-                className="border-chess-wood-dark/20 hover:bg-chess-wood-light/20"
+                className="border-chess-wood-dark/20 hover:bg-chess-wood-light/20 medieval-ornate-border"
               >
                 <RotateCcw className="w-5 h-5 mr-2" />
                 Reset

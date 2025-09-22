@@ -5,6 +5,7 @@ import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
 import Navigation from '@/components/navigation'
+import ThemeToggle from '@/components/theme-toggle'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const crimsonPro = Crimson_Pro({ 
@@ -45,6 +46,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navigation />
+          <ThemeToggle />
           <main className="relative">
             {children}
           </main>

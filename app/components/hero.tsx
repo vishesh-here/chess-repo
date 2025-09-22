@@ -62,14 +62,14 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
-            <Button asChild size="lg" className="bg-gradient-to-r from-amber-600 to-amber-800 hover:from-amber-700 hover:to-amber-900 text-white shadow-lg hover:shadow-xl transition-all duration-300 px-8 py-3">
+            <Button asChild size="lg" className="bg-gradient-to-r from-amber-600 to-amber-800 hover:from-amber-700 hover:to-amber-900 text-white shadow-lg hover:shadow-xl transition-all duration-300 px-8 py-3 medieval-button">
               <Link href="/openings">
                 <BookOpen className="w-5 h-5 mr-2" />
                 Start Learning
               </Link>
             </Button>
             
-            <Button asChild variant="outline" size="lg" className="border-2 border-amber-600/20 hover:bg-amber-600/10 px-8 py-3">
+            <Button asChild variant="outline" size="lg" className="border-2 border-amber-600/20 hover:bg-amber-600/10 px-8 py-3 medieval-ornate-border">
               <Link href="/masters">
                 <Crown className="w-5 h-5 mr-2" />
                 Meet the Masters
@@ -88,11 +88,11 @@ export default function Hero() {
               const Icon = stat?.icon || BookOpen
               return (
                 <div key={index} className="text-center group hover-lift">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg">
-                    <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-amber-600 to-amber-800 rounded-xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg medieval-card">
+                    <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-amber-600 to-amber-800 rounded-xl mb-4 group-hover:scale-110 transition-transform duration-300 medieval-border">
                       <Icon className="w-6 h-6 text-white" />
                     </div>
-                    <div className="text-3xl font-bold font-crimson text-amber-600 mb-2 animate-count-up">
+                    <div className="text-3xl font-bold font-crimson text-amber-600 mb-2 animate-count-up medieval-text-gold">
                       {stat?.value || '0'}
                     </div>
                     <div className="text-sm text-foreground/70 font-medium">
