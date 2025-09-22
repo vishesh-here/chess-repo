@@ -54,6 +54,41 @@
     --chess-wood-dark: 25 20% 35%;
     --chess-accent: 30 70% 35%;
   }
+
+  /* Medieval Chess Theme Variables */
+  .theme-medieval {
+    --background: 25 20% 8%;
+    --foreground: 45 15% 85%;
+    --card: 25 25% 12%;
+    --card-foreground: 45 15% 85%;
+    --popover: 25 25% 12%;
+    --popover-foreground: 45 15% 85%;
+    --primary: 45 85% 55%;
+    --primary-foreground: 25 20% 8%;
+    --secondary: 25 15% 18%;
+    --secondary-foreground: 45 15% 85%;
+    --muted: 25 15% 18%;
+    --muted-foreground: 45 10% 65%;
+    --accent: 45 85% 55%;
+    --accent-foreground: 25 20% 8%;
+    --destructive: 0 75% 50%;
+    --destructive-foreground: 45 15% 85%;
+    --border: 25 20% 25%;
+    --input: 25 20% 25%;
+    --ring: 45 85% 55%;
+    --radius: 0.75rem;
+    
+    /* Medieval specific colors */
+    --medieval-gold: 45 85% 55%;
+    --medieval-bronze: 30 60% 40%;
+    --medieval-iron: 220 10% 35%;
+    --medieval-wood-dark: 25 30% 15%;
+    --medieval-wood-light: 35 25% 35%;
+    --medieval-parchment: 45 25% 85%;
+    --medieval-crimson: 0 75% 35%;
+    --medieval-royal-blue: 220 75% 25%;
+    --medieval-emerald: 150 60% 25%;
+  }
 }
 
 @layer base {
@@ -78,18 +113,18 @@
   }
   
   .wooden-texture {
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='https://freesvg.org/img/texturelegno.png fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4b896' fill-opacity='0.1'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg' fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4b896' fill-opacity='0.1'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
     background-color: hsl(var(--chess-wood-light));
   }
 
   .chess-square-light {
     background-color: hsl(var(--chess-wood-light));
-    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='https://static.vecteezy.com/system/resources/previews/022/983/392/non_2x/a-pattern-of-light-and-dark-brown-squares-of-a-chessboard-wooden-board-for-chess-moves-on-a-checkered-background-chess-cartoon-texture-for-printing-on-textiles-and-paper-gift-packaging-vector.jpg fill='%23D4B896' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v20h40V20H20z'/%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg' fill='%23D4B896' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v20h40V20H20z'/%3E%3C/svg%3E");
   }
 
   .chess-square-dark {
     background-color: hsl(var(--chess-wood-dark));
-    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Chessboard480.svg/1024px-Chessboard480.svg.png fill='%238B4513' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v20h40V20H20z'/%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg' fill='%238B4513' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v20h40V20H20z'/%3E%3C/svg%3E");
   }
 
   .gradient-wooden {
@@ -114,6 +149,132 @@
       radial-gradient(circle at 25% 25%, hsl(var(--chess-wood-light)) 0%, transparent 50%),
       radial-gradient(circle at 75% 75%, hsl(var(--chess-wood-dark)) 0%, transparent 50%),
       linear-gradient(135deg, hsl(var(--chess-wood-light)), hsl(var(--chess-wood-dark)));
+  }
+
+  /* Medieval Theme Styles */
+  .theme-medieval .wooden-texture {
+    background-image: 
+      linear-gradient(45deg, rgba(45, 24, 16, 0.8) 25%, transparent 25%), 
+      linear-gradient(-45deg, rgba(45, 24, 16, 0.8) 25%, transparent 25%),
+      radial-gradient(circle at 30% 30%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(101, 67, 33, 0.1) 0%, transparent 50%);
+    background-color: hsl(var(--medieval-wood-dark));
+  }
+
+  .theme-medieval .chess-hero {
+    background: 
+      radial-gradient(circle at 25% 25%, hsl(var(--medieval-gold)) 0%, transparent 70%),
+      radial-gradient(circle at 75% 75%, hsl(var(--medieval-bronze)) 0%, transparent 70%),
+      linear-gradient(135deg, hsl(var(--medieval-wood-dark)), hsl(var(--background)));
+  }
+
+  .theme-medieval .medieval-border {
+    border: 3px solid hsl(var(--medieval-gold)) !important;
+    border-image: linear-gradient(45deg, hsl(var(--medieval-gold)), hsl(var(--medieval-bronze)), hsl(var(--medieval-gold))) 1;
+    box-shadow: 
+      inset 0 0 20px rgba(0, 0, 0, 0.3),
+      0 0 20px rgba(218, 165, 32, 0.2);
+  }
+
+  .theme-medieval .medieval-ornate-border {
+    position: relative;
+    border: 2px solid hsl(var(--medieval-gold)) !important;
+    border-radius: 12px;
+  }
+
+  .theme-medieval .medieval-ornate-border::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    background: linear-gradient(45deg, hsl(var(--medieval-gold)), hsl(var(--medieval-bronze)), hsl(var(--medieval-gold)));
+    border-radius: 16px;
+    z-index: -1;
+    opacity: 0.7;
+  }
+
+  .theme-medieval .medieval-ornate-border::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: repeating-linear-gradient(
+      45deg,
+      hsl(var(--medieval-gold)) 0px,
+      hsl(var(--medieval-gold)) 2px,
+      transparent 2px,
+      transparent 4px
+    );
+    border-radius: 14px;
+    z-index: -1;
+    opacity: 0.3;
+  }
+
+  .theme-medieval .medieval-card {
+    background: linear-gradient(135deg, hsl(var(--card)), hsl(var(--medieval-wood-dark))) !important;
+    border: 1px solid hsl(var(--medieval-gold)) !important;
+    box-shadow: 
+      0 4px 20px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(218, 165, 32, 0.2);
+  }
+
+  .theme-medieval .medieval-button {
+    background: linear-gradient(135deg, hsl(var(--medieval-gold)), hsl(var(--medieval-bronze))) !important;
+    border: 2px solid hsl(var(--medieval-gold)) !important;
+    color: hsl(var(--medieval-wood-dark)) !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 
+      0 4px 15px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .theme-medieval .medieval-button:hover {
+    background: linear-gradient(135deg, hsl(var(--medieval-bronze)), hsl(var(--medieval-gold))) !important;
+    transform: translateY(-2px);
+    box-shadow: 
+      0 6px 20px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .theme-medieval .medieval-text-gold {
+    color: hsl(var(--medieval-gold)) !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .theme-medieval .medieval-text-shadow {
+    text-shadow: 
+      2px 2px 4px rgba(0, 0, 0, 0.8),
+      0 0 10px rgba(218, 165, 32, 0.3) !important;
+  }
+
+  .chess-piece-king::before { content: "♔"; }
+  .chess-piece-queen::before { content: "♕"; }
+  .chess-piece-rook::before { content: "♖"; }
+  .chess-piece-bishop::before { content: "♗"; }
+  .chess-piece-knight::before { content: "♘"; }
+  .chess-piece-pawn::before { content: "♙"; }
+
+  .theme-medieval .chess-piece-king::before { content: "👑"; }
+  .theme-medieval .chess-piece-queen::before { content: "👸"; }
+  .theme-medieval .chess-piece-rook::before { content: "🏰"; }
+  .theme-medieval .chess-piece-bishop::before { content: "⛪"; }
+  .theme-medieval .chess-piece-knight::before { content: "🐎"; }
+  .theme-medieval .chess-piece-pawn::before { content: "🛡️"; }
+
+  .theme-medieval .medieval-scroll {
+    background: 
+      linear-gradient(135deg, hsl(var(--medieval-parchment)), hsl(var(--medieval-wood-light))),
+      repeating-linear-gradient(0deg, rgba(101, 67, 33, 0.1) 0px, rgba(101, 67, 33, 0.1) 1px, transparent 1px, transparent 20px) !important;
+    border: 2px solid hsl(var(--medieval-bronze)) !important;
+    border-radius: 8px;
+    box-shadow: 
+      0 4px 15px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 }
 

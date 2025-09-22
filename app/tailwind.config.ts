@@ -60,6 +60,18 @@ const config: Config = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
+        'chess-wood-light': 'hsl(var(--chess-wood-light))',
+        'chess-wood-dark': 'hsl(var(--chess-wood-dark))',
+        'chess-accent': 'hsl(var(--chess-accent))',
+        'medieval-gold': 'hsl(var(--medieval-gold))',
+        'medieval-bronze': 'hsl(var(--medieval-bronze))',
+        'medieval-iron': 'hsl(var(--medieval-iron))',
+        'medieval-wood-dark': 'hsl(var(--medieval-wood-dark))',
+        'medieval-wood-light': 'hsl(var(--medieval-wood-light))',
+        'medieval-parchment': 'hsl(var(--medieval-parchment))',
+        'medieval-crimson': 'hsl(var(--medieval-crimson))',
+        'medieval-royal-blue': 'hsl(var(--medieval-royal-blue))',
+        'medieval-emerald': 'hsl(var(--medieval-emerald))',
       },
       keyframes: {
         'accordion-down': {

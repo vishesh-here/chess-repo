@@ -42,10 +42,10 @@ export default function Navigation() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
-            <div className="p-2 bg-gradient-to-br from-amber-600 to-amber-800 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300">
+            <div className="p-2 bg-gradient-to-br from-amber-600 to-amber-800 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300 medieval-border">
               <Crown className="w-6 h-6 text-white" />
             </div>
-            <span className="text-xl font-bold font-crimson text-chess-accent">
+            <span className="text-xl font-bold font-crimson text-chess-accent medieval-text-gold">
               ChessMaster
             </span>
           </Link>
